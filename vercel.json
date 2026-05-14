@@ -1,10 +1,10 @@
 {
-  "framework": "nextjs",
   "buildCommand": "npm run build",
-  "outputDirectory": ".next",
+  "devCommand": "npm run dev",
   "installCommand": "npm install",
-  "regions": ["hkg1"],
+  "framework": "nextjs",
   "env": {
-    "NODE_ENV": "production"
+    "NEXT_PUBLIC_SUPABASE_URL": "https://dehtwxvnjxferniijifv.supabase.co",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "sb_publishable_KcSZTG-E2pPcMlsNvKIu8Q_rf6N2fQ1"
   }
 }
