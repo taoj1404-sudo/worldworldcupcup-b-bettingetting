@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "test:api": "node test-api.js",
+    "test:health": "node test-health.js",
+    "test:auth": "node test-auth.js",
+    "test:all": "node test-all.js"
+  }
+}

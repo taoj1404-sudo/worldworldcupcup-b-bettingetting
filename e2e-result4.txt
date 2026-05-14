@@ -1,0 +1,27 @@
+=== E2E 端到端测试 ===
+
+
+▶ 注册新用户... ✅ 201 {"code":0,"message":"created","data":{"message":"注册成功，请登录","user":{"id":8,"username":"e2e_1778301778984","email":"e2e_1778301778984@test.com"}}}
+   ID: 8, Email: e2e_1778301778984@test.com
+
+▶ 用户登录... ✅ 200 {"code":0,"message":"success","data":{"user":{"id":8,"username":"e2e_1778301778984","email":"e2e_1778301778984@test.com","role":"user"},"accessToken":
+   Token: eyJhbGciOiJIUzI1NiJ9...
+
+▶ 获取比赛列表... ✅ 200 {"code":0,"message":"success","data":{"matches":[{"id":1,"teamHome":"巴西","teamAway":"塞尔维亚","teamHomeCode":"BRA","teamAwayCode":"SRB","teamHomeFlagUrl"
+   共 5 场，可下注 5 场
+   使用比赛 ID: 1
+
+▶ 获取赔率... ✅ 200 {"code":0,"message":"success","data":{"matchId":1,"match":{"id":1,"teamHome":"巴西","teamAway":"塞尔维亚","teamHomeCode":"BRA","teamAwayCode":"SRB","teamHom
+   赔率选项: undefined 个
+   选择: home_win, 赔率: 2
+
+▶ 查看余额... ✅ 200 {"balance":0,"frozenBalance":0,"availableBalance":0,"currency":"CNY"}
+c:\Users\shipi\WorkBuddy\20260508113914\worldcup-betting\e2e-test.js:105
+  const balance1 = wallet1.status === 200 ? wallet1.data.data.balance : '?';
+                                                              ^
+
+TypeError: Cannot read properties of undefined (reading 'balance')
+    at c:\Users\shipi\WorkBuddy\20260508113914\worldcup-betting\e2e-test.js:105:63
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Node.js v22.14.0

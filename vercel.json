@@ -1,0 +1,10 @@
+{
+  "framework": "nextjs",
+  "buildCommand": "npm run build",
+  "outputDirectory": ".next",
+  "installCommand": "npm install",
+  "regions": ["hkg1", "sin1", "tyo1"],
+  "env": {
+    "NODE_ENV": "production"
+  }
+}

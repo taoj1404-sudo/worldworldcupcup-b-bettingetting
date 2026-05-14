@@ -1,0 +1,68 @@
+version: '3.8'
+
+services:
+  # PostgreSQL 数据库
+  db:
+    image: postgres:16-alpine
+    container_name: worldcup_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: worldcup
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-worldcup_secure_pass}
+      POSTGRES_DB: worldcup_betting
+    command: postgres -c 'max_connections=200' -c 'shared_buffers=256MB'
+    ports:
+      - "0.0.0.0:5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U worldcup -d worldcup_betting"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis（可选，用于 Socket.IO 扩展）
+  redis:
+    image: redis:7-alpine
+    container_name: worldcup_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # 应用服务
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: worldcup_app
+    restart: unless-stopped
+    ports:
+      - "0.0.0.0:3000:3000"
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: ${DATABASE_URL:-postgresql://worldcup:worldcup_secure_pass@db:5432/worldcup_betting}
+      REDIS_URL: ${REDIS_URL:-redis://redis:6379}
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  postgres_data:
+  redis_data:

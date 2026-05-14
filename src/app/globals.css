@@ -1,0 +1,225 @@
+@import "tailwindcss";
+
+/* ─── 设计变量 ──────────────────────────────────────────────────────── */
+:root {
+  /* 主题色 */
+  --color-primary:       #f59e0b;   /* amber-500 */
+  --color-primary-dark:  #d97706;   /* amber-600 */
+  --color-primary-light: #fbbf24;   /* amber-400 */
+
+  /* 背景 */
+  --bg-base:    #09090b;   /* zinc-950 */
+  --bg-card:    #18181b;   /* zinc-900 */
+  --bg-hover:   #27272a;   /* zinc-800 */
+  --bg-input:   #1c1c1e;   /* iOS 风格深色 */
+
+  /* 边框 */
+  --border:     #3f3f46;   /* zinc-700 */
+  --border-light: #27272a; /* zinc-800 */
+
+  /* 文字 */
+  --text-primary:   #fafafa; /* zinc-50 */
+  --text-secondary: #a1a1aa; /* zinc-400 */
+  --text-muted:     #52525b; /* zinc-600 */
+
+  /* 状态色 */
+  --color-win:   #22c55e;  /* green-500 */
+  --color-loss:  #ef4444;  /* red-500 */
+  --color-live:  #f59e0b;  /* amber-500 */
+  --color-draw:  #8b5cf6;  /* violet-500 */
+}
+
+@theme inline {
+  --color-primary:       var(--color-primary);
+  --color-primary-dark:  var(--color-primary-dark);
+  --color-primary-light:  var(--color-primary-light);
+  --color-win:   var(--color-win);
+  --color-loss:  var(--color-loss);
+  --color-live:  var(--color-live);
+  --color-draw: var(--color-draw);
+}
+
+/* ─── 基础重置 ──────────────────────────────────────────────────────── */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg-base);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+               'Helvetica Neue', Arial, sans-serif;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── 滚动条 ──────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 2px;
+}
+
+/* ─── 选中文字 ─────────────────────────────────────────────────────── */
+::selection {
+  background: var(--color-primary);
+  color: #000;
+}
+
+/* ─── 按钮基础样式 ─────────────────────────────────────────────────── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  background: var(--color-primary);
+  color: #000;
+  font-weight: 600;
+  font-size: 0.875rem;
+  border-radius: 0.5rem;
+  transition: background 0.15s, transform 0.1s;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+.btn-primary:hover  { background: var(--color-primary-dark); }
+.btn-primary:active { transform: scale(0.98); }
+.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  background: transparent;
+  color: var(--text-primary);
+  font-weight: 500;
+  font-size: 0.875rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  transition: border-color 0.15s, background 0.15s;
+  cursor: pointer;
+  text-decoration: none;
+}
+.btn-secondary:hover { border-color: var(--color-primary); background: var(--bg-hover); }
+
+/* ─── 卡片样式 ─────────────────────────────────────────────────────── */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+/* ─── 表单输入框 ───────────────────────────────────────────────────── */
+.input {
+  width: 100%;
+  padding: 0.625rem 0.875rem;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  color: var(--text-primary);
+  font-size: 0.9375rem;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.input:focus  { border-color: var(--color-primary); }
+.input::placeholder { color: var(--text-muted); }
+
+.input-error { border-color: var(--color-loss) !important; }
+
+/* ─── 比分标签 ─────────────────────────────────────────────────────── */
+.score-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.75rem;
+  background: var(--bg-hover);
+  border-radius: 9999px;
+  font-weight: 700;
+  font-size: 1.125rem;
+  font-variant-numeric: tabular-nums;
+  font-family: ui-monospace, monospace;
+}
+
+/* ─── 状态标签 ─────────────────────────────────────────────────────── */
+.status-live    { color: var(--color-live); }
+.status-finished { color: var(--text-secondary); }
+.status-upcoming { color: var(--color-draw); }
+
+/* ─── 赔率按钮组 ───────────────────────────────────────────────────── */
+.odds-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.125rem;
+  padding: 0.75rem 0.5rem;
+  background: var(--bg-hover);
+  border: 1px solid var(--border-light);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  min-width: 0;
+  flex: 1;
+  text-align: center;
+}
+.odds-btn:hover   { border-color: var(--color-primary); background: var(--bg-card); }
+.odds-btn.selected { border-color: var(--color-primary); background: rgba(245,158,11,0.1); }
+
+/* ─── 加载动画 ─────────────────────────────────────────────────────── */
+@keyframes pulse-dot {
+  0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); }
+  40%           { opacity: 1;   transform: scale(1); }
+}
+.loading-dots span {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  animation: pulse-dot 1.4s infinite ease-in-out;
+}
+.loading-dots span:nth-child(1) { animation-delay: -0.32s; }
+.loading-dots span:nth-child(2) { animation-delay: -0.16s; }
+
+/* ─── Toast / 通知 ─────────────────────────────────────────────────── */
+.toast-container {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  pointer-events: none;
+}
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 0.625rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  font-size: 0.875rem;
+  pointer-events: auto;
+  animation: slideInRight 0.25s ease-out;
+  max-width: 320px;
+}
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(1rem); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+.toast-success { border-color: var(--color-win); }
+.toast-error   { border-color: var(--color-loss); }

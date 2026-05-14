@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>登录调试</title>
+  <style>
+    body { font-family: monospace; padding: 20px; background: #0d1117; color: #c9d1d9; }
+    .box { background: #161b22; border: 1px solid #30363d; padding: 15px; margin: 10px 0; border-radius: 6px; }
+    .success { color: #3fb950; }
+    .error { color: #f85149; }
+    .warn { color: #d29922; }
+    pre { background: #0d1117; padding: 10px; overflow-x: auto; font-size: 13px; border-radius: 4px; }
+    button { background: #238636; color: #fff; border: none; padding: 10px 20px; cursor: pointer; border-radius: 6px; margin: 5px; }
+    button:hover { background: #2ea043; }
+    input { background: #0d1117; color: #c9d1d9; border: 1px solid #30363d; padding: 8px; margin: 5px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h1>🔍 登录调试工具</h1>
+
+  <div class="box">
+    <h3>Step 1: 测试 API 直接调用</h3>
+    <button onclick="testApiDirect()">1. 测试 API</button>
+    <pre id="api-result">等待测试...</pre>
+  </div>
+
+  <div class="box">
+    <h3>Step 2: 模拟前端表单提交</h3>
+    <input type="email" id="test-email" value="admin@worldcup.bet" size="30">
+    <input type="password" id="test-password" value="Admin@2026!" size="20">
+    <br><br>
+    <button onclick="testFormSubmit()">2. 模拟表单提交</button>
+    <pre id="form-result">等待测试...</pre>
+  </div>
+
+  <div class="box">
+    <h3>Step 3: 实际访问登录页面</h3>
+    <button onclick="openLoginPage()">3. 打开登录页面</button>
+  </div>
+
+  <div class="box">
+    <h3>诊断指南</h3>
+    <ul>
+      <li>Step 1 成功 = API 本身没问题</li>
+      <li>Step 2 成功 = 前端代码没问题</li>
+      <li>如果 Step 1/2 成功但实际登录失败 = 可能是浏览器缓存或 Cookie 问题</li>
+    </ul>
+    <p class="warn">尝试后请告诉我哪一步失败</p>
+  </div>
+
+  <script>
+    async function testApiDirect() {
+      const result = document.getElementById('api-result');
+      result.innerHTML = '测试中...\n\n';
+      
+      const data = { email: 'admin@worldcup.bet', password: 'Admin@2026!' };
+      result.innerHTML += `发送: ${JSON.stringify(data)}\n\n`;
+      
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        
+        const json = await res.json();
+        result.innerHTML += `状态: ${res.status}\n`;
+        result.innerHTML += `响应: ${JSON.stringify(json, null, 2)}\n\n`;
+        
+        if (json.code === 0) {
+          result.innerHTML += `<span class="success">✓ API 调用成功!</span>`;
+        } else {
+          result.innerHTML += `<span class="error">✗ API 返回错误: ${json.message}</span>`;
+        }
+      } catch (e) {
+        result.innerHTML += `<span class="error">✗ 网络错误: ${e.message}</span>`;
+      }
+    }
+
+    async function testFormSubmit() {
+      const result = document.getElementById('form-result');
+      const email = document.getElementById('test-email').value;
+      const password = document.getElementById('test-password').value;
+      
+      result.innerHTML = '模拟 FormData 提交...\n\n';
+      result.innerHTML += `email: "${email}"\n`;
+      result.innerHTML += `password: "${password}"\n\n`;
+      
+      // 模拟 AuthPage.tsx 中的表单处理
+      const body = {};
+      const formData = new FormData();
+      formData.append('email', email);
+      formData.append('password', password);
+      formData.forEach((v, k) => { body[k] = v });
+      
+      result.innerHTML += `FormData 转换后: ${JSON.stringify(body)}\n\n`;
+      
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        });
+        
+        const json = await res.json();
+        result.innerHTML += `状态: ${res.status}\n`;
+        result.innerHTML += `响应: ${JSON.stringify(json, null, 2)}\n\n`;
+        
+        if (json.code === 0) {
+          result.innerHTML += `<span class="success">✓ 表单提交成功!</span>`;
+        } else {
+          result.innerHTML += `<span class="error">✗ 错误: ${json.message}</span>`;
+        }
+      } catch (e) {
+        result.innerHTML += `<span class="error">✗ 网络错误: ${e.message}</span>`;
+      }
+    }
+
+    function openLoginPage() {
+      window.open('/login', '_blank');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+# 依赖
+node_modules/
+.pnp
+.pnp.js
+
+# 构建产物
+.next/
+out/
+dist/
+build/
+
+# 环境变量（不提交真实密钥）
+.env
+.env.local
+.env.production
+
+# 日志
+*.log
+npm-debug.log*
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/settings.json
+.idea/
+
+# Drizzle 生成的迁移（根据需要决定是否提交）
+# src/db/migrations/
+
+# 测试覆盖率
+coverage/
+
+# Docker
+.dockerignore
+
+# CI/CD 日志
+*.log
+
+# 本地数据库数据
+postgres_data/
+redis_data/

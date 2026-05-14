@@ -1,0 +1,66 @@
+
+> worldcup-betting@0.1.0 build
+> next build
+
+▲ Next.js 16.2.6 (Turbopack)
+- Environments: .env.local, .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 3.8s
+  Running TypeScript ...
+  Finished TypeScript in 8.2s ...
+  Collecting page data using 31 workers ...
+  Generating static pages using 31 workers (0/35) ...
+  Generating static pages using 31 workers (8/35) 
+  Generating static pages using 31 workers (17/35) 
+  Generating static pages using 31 workers (26/35) 
+✓ Generating static pages using 31 workers (35/35) in 544ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/bets
+├ ○ /admin/matches
+├ ○ /admin/payments
+├ ○ /admin/users
+├ ○ /admin/withdrawals
+├ ƒ /api/account
+├ ƒ /api/account/admin/balance
+├ ƒ /api/account/deposit
+├ ƒ /api/account/withdraw
+├ ƒ /api/admin/bets
+├ ƒ /api/admin/dashboard
+├ ƒ /api/admin/odds/history
+├ ƒ /api/admin/payments
+├ ƒ /api/admin/users
+├ ƒ /api/admin/users/[id]
+├ ƒ /api/admin/withdrawals
+├ ƒ /api/auth/change-password
+├ ƒ /api/auth/forgot-password
+├ ƒ /api/auth/login
+├ ƒ /api/auth/logout
+├ ƒ /api/auth/me
+├ ƒ /api/auth/refresh
+├ ƒ /api/auth/register
+├ ƒ /api/auth/reset-password
+├ ƒ /api/bets
+├ ƒ /api/bets/[id]
+├ ƒ /api/bets/[id]/settle
+├ ƒ /api/bets/settle
+├ ƒ /api/health
+├ ƒ /api/matches
+├ ƒ /api/matches/[id]
+├ ƒ /api/matches/[id]/score
+├ ƒ /api/matches/[id]/status
+├ ƒ /api/odds
+├ ƒ /api/odds/[id]
+├ ƒ /api/odds/[id]/suspend
+├ ○ /login
+└ ○ /register
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
