@@ -41,3 +41,5 @@ coverage/
 # 本地数据库数据
 postgres_data/
 redis_data/
+
+.vercel

@@ -51,11 +51,11 @@ export const GET = async (request: NextRequest) => {
       .select({
         id: transactions.id,
         type: transactions.type,
-        amount: transactions.amount,
-        balanceBefore: transactions.balanceBefore,
-        balanceAfter: transactions.balanceAfter,
-        description: transactions.description,
-        referenceId: transactions.referenceId,
+        amountCents: transactions.amountCents,
+        balanceBeforeCents: transactions.balanceBeforeCents,
+        balanceAfterCents: transactions.balanceAfterCents,
+        remark: transactions.remark,
+        externalOrderId: transactions.externalOrderId,
         createdAt: transactions.createdAt,
       })
       .from(transactions)
@@ -72,11 +72,11 @@ export const GET = async (request: NextRequest) => {
         history: history.map(t => ({
           id: t.id,
           type: t.type,
-          amount: Number(t.amount) / 100,
-          balanceBefore: Number(t.balanceBefore) / 100,
-          balanceAfter: Number(t.balanceAfter) / 100,
-          description: t.description,
-          referenceId: t.referenceId,
+          amount: Number(t.amountCents) / 100,
+          balanceBefore: Number(t.balanceBeforeCents) / 100,
+          balanceAfter: Number(t.balanceAfterCents) / 100,
+          description: t.remark,
+          referenceId: t.externalOrderId,
           createdAt: t.createdAt,
         })),
         pagination: {

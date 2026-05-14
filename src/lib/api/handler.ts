@@ -7,7 +7,7 @@ import { ZodError } from 'zod'
 import { AuthError, ApiError } from './auth'
 import { badRequest, unauthorized, forbidden, internalError, err } from './response'
 
-type Handler = (req: NextRequest, context?: any) => Promise<NextResponse>
+type Handler = (req: NextRequest, context?: any) => Promise<Response | NextResponse>
 
 /**
  * 包装 API 路由，统一处理异常
